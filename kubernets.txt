@@ -1,0 +1,229 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+spec:
+  containers:
+  - name: testpod
+    image: alpine:3.5
+    command: ["ping", "8.8.8.8"]
+
+PS C:\Users\shiva\Desktop\kuber> kubectl apply -f pod.yaml
+pod/demo created
+PS C:\Users\shiva\Desktop\kuber> kubectl get pods
+NAME   READY   STATUS    RESTARTS   AGE
+demo   1/1     Running   0          26s
+PS C:\Users\shiva\Desktop\kuber> kubectl logs demo
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: seq=0 ttl=37 time=139.383 ms
+64 bytes from 8.8.8.8: seq=1 ttl=37 time=119.361 ms
+64 bytes from 8.8.8.8: seq=2 ttl=37 time=204.471 ms
+64 bytes from 8.8.8.8: seq=3 ttl=37 time=53.284 ms
+64 bytes from 8.8.8.8: seq=4 ttl=37 time=80.194 ms
+64 bytes from 8.8.8.8: seq=5 ttl=37 time=75.593 ms
+64 bytes from 8.8.8.8: seq=31 ttl=37 time=107.170 ms
+64 bytes from 8.8.8.8: seq=32 ttl=37 time=71.476 ms
+64 bytes from 8.8.8.8: seq=33 ttl=37 time=83.107 ms
+64 bytes from 8.8.8.8: seq=34 ttl=37 time=73.967 ms
+64 bytes from 8.8.8.8: seq=35 ttl=37 time=90.332 ms
+64 bytes from 8.8.8.8: seq=36 ttl=37 time=77.584 ms
+64 bytes from 8.8.8.8: seq=37 ttl=37 time=78.872 ms
+64 bytes from 8.8.8.8: seq=38 ttl=37 time=76.345 ms
+64 bytes from 8.8.8.8: seq=39 ttl=37 time=91.054 ms
+PS C:\Users\shiva\Desktop\kuber> kubectl delete -f pod.yaml
+pod "demo" deleted
+
+docker swarm init
+Error response from daemon: This node is already part of a swarm. Use "docker swarm leave" to leave this swarm and join another one.
+PS C:\Users\shiva\Desktop\kuber> docker service create --name demo alpine:3.5 ping 8.8.8.8
+rq4cdb0atefg3nxbm73j53edj
+overall progress: 1 out of 1 tasks
+1/1: running   [==================================================>]
+verify: Service converged
+PS C:\Users\shiva\Desktop\kuber> docker service ps demo
+ID             NAME      IMAGE        NODE             DESIRED STATE   CURRENT STATE            ERROR     PORTS
+kmu8nk1poyw2   demo.1    alpine:3.5   docker-desktop   Running         Running 10 seconds ago
+PS C:\Users\shiva\Desktop\kuber> docker service logs demo
+demo.1.kmu8nk1poyw2@docker-desktop    | PING 8.8.8.8 (8.8.8.8): 56 data bytes
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=0 ttl=37 time=82.376 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=1 ttl=37 time=57.453 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=2 ttl=37 time=81.087 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=3 ttl=37 time=58.468 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=4 ttl=37 time=79.925 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=5 ttl=37 time=80.269 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=6 ttl=37 time=48.010 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=7 ttl=37 time=80.083 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=8 ttl=37 time=82.629 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=9 ttl=37 time=80.682 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=10 ttl=37 time=79.507 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=11 ttl=37 time=60.307 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=12 ttl=37 time=52.365 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=13 ttl=37 time=79.925 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=14 ttl=37 time=90.811 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=15 ttl=37 time=79.454 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=16 ttl=37 time=79.199 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=17 ttl=37 time=80.905 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=18 ttl=37 time=87.750 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=19 ttl=37 time=76.772 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=20 ttl=37 time=62.294 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=20 ttl=37 time=62.294 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=21 ttl=37 time=48.517 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=22 ttl=37 time=75.255 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=23 ttl=37 time=75.498 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=24 ttl=37 time=74.331 ms
+PS C:\Users\shiva\Desktop\kuber> docker service rm demo
+demo
+
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bb-demo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      bb: web
+  template:
+    metadata:
+      labels:
+        bb: web
+    spec:
+      containers:
+      - name: bb-site
+        image: 12345shivaleela/devops
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bb-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    bb: web
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30000
+  
+
+ docker service ps demo
+ID             NAME      IMAGE        NODE             DESIRED STATE   CURRENT STATE            ERROR     PORTS
+kmu8nk1poyw2   demo.1    alpine:3.5   docker-desktop   Running         Running 10 seconds ago
+PS C:\Users\shiva\Desktop\kuber> docker service logs demo
+demo.1.kmu8nk1poyw2@docker-desktop    | PING 8.8.8.8 (8.8.8.8): 56 data bytes
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=0 ttl=37 time=82.376 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=1 ttl=37 time=57.453 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=2 ttl=37 time=81.087 ms
+demo.1.kmu8nk1poyw2@docker-desktop    | 64 bytes from 8.8.8.8: seq=3 ttl=37 time=58.468 ms
+service/bb-entrypoint created
+PS C:\Users\shiva\Desktop\kuber> kubectl get deployments
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+bb-demo   1/1     1            1           14s
+PS C:\Users\shiva\Desktop\kuber> kubectl get services
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+bb-entrypoint   NodePort    10.106.104.98   <none>        80:30000/TCP   40s
+kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        4d1h
+PS C:\Users\shiva\Desktop\kuber> kubectl delete -f bb.yaml
+deployment.apps "bb-demo" deleted
+service "bb-entrypoint" deleted
+
+
+
+
+version: '3.7'
+
+services:
+  bb-app:
+    image: 12345shivaleela/devops
+    ports:
+      - "8000:3000"
+
+
+
+
+docker stack deploy -c bb-stack.yaml demo
+Creating network demo_default
+Creating service demo_bb-app
+PS C:\Users\shiva\Desktop\kuber> docker service ls
+ID             NAME            MODE         REPLICAS   IMAGE                           PORTS
+prp2hqgf112z   demo_bb-app     replicated   1/1        12345shivaleela/devops:latest   *:8000->3000/tcp
+fymfw54zmvsq   my-prometheus   replicated   1/1        prom/prometheus:latest          *:9090->9090/tcp
+o2uiam6zv62d   ping_service    replicated   10/10      alpine:latest
+PS C:\Users\shiva\Desktop\kuber> docker stack rm demo
+Removing service demo_bb-app
+Removing network demo_default
+
+
+
+
+
+{
+  "metrics-addr" : "127.0.0.1:9323",
+  "experimental" : true
+}
+
+
+
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'codelab-monitor'
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['host.docker.internal:9090'] # Only works on Docker Desktop for Windows
+
+  - job_name: 'docker'
+         # metrics_path defaults to '/metrics'
+         # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['192.168.65.1:9323']
+
+
+PS C:\Users\shiva\Desktop\C\tmp> docker service create --replicas 1 --name my-prometheus --mount type=bind,source=c:/tmp/prometheus.yml,destination=/etc/prometheus/prometheus.yml --publish published=9090,target=9090,protocol=tcp prom/prometheus
+corj4zum2zundfso4wsq6ixfj
+overall progress: 0 out of 1 tasks
+1/1: ready     [======================================>  
+verify: Service converged
+PS C:\Users\shiva\Desktop\C\tmp> docker service create --replicas 10 --name ping_service alpine ping docker.com
+o2uiam6zv62drhu2cptj93ja5
+overall progress: 10 out of 10 tasks
+1/10: running   [==================================================>]
+2/10: running   [==================================================>]
+3/10: running   [==================================================>]
+4/10: running   [==================================================>]
+5/10: running   [==================================================>]
+6/10: running   [==================================================>]
+7/10: running   [==================================================>]
+8/10: running   [==================================================>]
+9/10: running   [==================================================>]
+10/10: running   [==================================================>]
+verify: Service converged
+
+
